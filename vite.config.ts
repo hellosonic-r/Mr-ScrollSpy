@@ -1,17 +1,23 @@
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
+import path from 'path';
 
 export default defineConfig({
-  plugins: [dts()],
+  plugins: [
+    react(),
+    dts({
+      insertTypesEntry: true,
+    }),
+  ],
   build: {
     lib: {
-      entry: 'src/index.ts',
+      entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'MrScrollSpy',
       fileName: 'index',
-      formats: ['es', 'cjs'],
     },
     rollupOptions: {
-      external: ['react'],
+      external: ['react', 'react-dom'],
     },
   },
 });
